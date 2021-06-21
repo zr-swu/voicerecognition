@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>video</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta charset="utf-8">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+
+
+<body>
+<div class="container" align="center">
+    HELLO!
+    <br>
+    <br>
+    <tr>
+    </tr>
+    <video id="video1" autoplay="autoplay" controls=true
+           src='../audio/7.mp4'>
+    </video>
+</div>
+</body>
+
+
+<script>
+
+    var myVid=document.getElementById("video1");
+    myVid.addEventListener("timeupdate",timeupdate);
+
+    var _endTime;
+
+    //视频播放
+    function playMedia(startTime){
+        //设置结束时间
+        myVid.currentTime=startTime;
+        myVid.play();
+    }
+
+    function timeupdate(){
+        //因为当前的格式是带毫秒的float类型的如：12.231233，所以把他转成String了便于后面分割取秒
+        var time = myVid.currentTime+"";
+        document.getElementById("showTime").value=time;
+        var ts = time.substring(0,time.indexOf("."));
+        if(ts==_endTime){
+            myVid.pause();
+        }
+
+    }
+
+    function jump() {
+        $.ajax({
+            type: 'get', /*  请求方式  GET  、 POST 、 PUT 等.. */
+            url: 'http://localhost:8080/video/jump', /*  后台的接口(findApi)  使用相对路径即可 */
+            data: "keyword="+$("#keyword").val(),
+            dateType: 'json', /*  期望服务器返回的数据类型格式 */
+            success: function(result) { // 请求后台 应答成功返回来的数据
+                console.log(result);
+                playMedia(result.bg/1000);
+            },
+            error: function(xhr, status, error) { // 请求失败运行的函数
+                console.log(error);
+            }
+        })
+    }
+
+</script>
+
+</html>
