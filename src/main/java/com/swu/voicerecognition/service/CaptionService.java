@@ -22,10 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * 跳转逻辑的后端接口
- * @author : zr
- */
 
 @Service
 public class CaptionService {
@@ -36,13 +32,6 @@ public class CaptionService {
     private static final String APP_ID = "605807c0";
     private static final String SECRET_KEY = "665f37416494bf99a2b2d0456eac3703";
 
-    //音频文件路径
-    //1、绝对路径：D:\......\demo-3.0\src\main\resources\audio\lfasr.wav
-    //2、相对路径：./resources/audio/lfasr.wav
-    //3、通过classpath：
-    private static final String MOVIE_FILE_PATH = CaptionService.class.getResource("/").getPath()+"/audio/test2.mp4";
-//    private static final String AUDIO_FILE_PATH = LfasrSDKDemo.class.getResource("/").getPath()+"/audio/test2.mp3";
-    private static final String AUDIO_FILE_PATH = "D:\\fileUpload\\mp3\\testUpload.mp3";
 
     /**
      * 跳转到视频中出现关键词的位置
@@ -61,7 +50,7 @@ public class CaptionService {
             }
         }
 
-        System.out.println("实际返回的List：");
+        
         videoVOS.stream().forEach(System.out::println);
 
         HashMap<String, Object> map = new HashMap<>();
@@ -115,8 +104,8 @@ public class CaptionService {
 
         List<String> command = buildCommand(videoRealPath, voiceRealPath);
 
-        System.out.println("音频path："+voiceRealPath);
-        System.out.println(command);
+//         System.out.println("音频path："+voiceRealPath);
+//         System.out.println(command);
         ProcessBuilder builder = new ProcessBuilder();
 
         builder.command(command);
@@ -124,7 +113,7 @@ public class CaptionService {
         builder.redirectErrorStream(true);
 
 
-        System.out.println("视频语音分离开始...");
+//         System.out.println("视频语音分离开始...");
 
         Process process = null;
         try {
